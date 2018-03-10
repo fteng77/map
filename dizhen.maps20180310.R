@@ -6,15 +6,15 @@ library(maps)
 library(mapproj)
 library(plyr)
 library(tidyverse)
+setwd("D:/dizhen")
 
 ####1. 中国地图，参考https://zhuanlan.zhihu.com/p/26708368
-china_map <- readShapePoly("D:/dizhen/bou2_4p.shp")       # 读取地图空间数据
+china_map <- readShapePoly("bou2_4p.shp")       # 读取地图空间数据
 china<- fortify(china_map)
 china.plot<-ggplot()+
   geom_polygon(data=china, aes(x=long, y=lat, group=group),fill="grey95", colour="grey60",size=0.25)+
   coord_map("polyconic")
 
-setwd("D:/dizhen")
 dizhen<-read.csv("dizhen.all.new2.csv",header=T,stringsAsFactors = F)
 dizhen<-dizhen[,-1]
 dizhen3<-filter(dizhen,zhenji>=3)
