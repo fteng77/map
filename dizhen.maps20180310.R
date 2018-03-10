@@ -22,7 +22,13 @@ dizhen4<-filter(dizhen,zhenji>=4)
 dizhen5<-filter(dizhen,zhenji>=5)
 zhenji.hist<-hist(dizhen$zhenji)
 
-china.plot+geom_point(data=dizhen4,aes(x=jingdu,y=weidu,size=zhenji,color=zhenji,fill=I("blue")),alpha=I(1/12),shape=I(21))
+china.plot+
+  geom_point(data=dizhen5,aes(x=jingdu,y=weidu,size=zhenji),alpha=I(1/5),shape=I(21),color=I("red"),fill=I("red"))+
+  labs(x = "经度", y = "纬度")+theme(legend.position = "none")
+
+scale_colour_hue("what does it eat?");
+
+  theme(legend.position =c(120,5))#scale
 #reference: geom_point(data=china_data, aes(x = jd,y = wd),size=4,fill="black",  colour="white")+ #散点图
 
 ####2. 分省地图，参考http://blog.sina.com.cn/s/blog_6bc5205e0102vmgq.html
