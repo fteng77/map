@@ -26,7 +26,7 @@ china.plot+geom_point(data=dizhen4,aes(x=jingdu,y=weidu,size=zhenji,color=zhenji
 #reference: geom_point(data=china_data, aes(x = jd,y = wd),size=4,fill="black",  colour="white")+ #散点图
 
 ####2. 分省地图，参考http://blog.sina.com.cn/s/blog_6bc5205e0102vmgq.html
-CHN_adm2 <- readShapePoly("D:/dizhen/shengditu/CHN_adm2.shp")        #读取市级中国地图
+CHN_adm2 <- readShapePoly("shengditu/CHN_adm2.shp")        #读取市级中国地图
 CHN <- fortify(CHN_adm2)     #转化为数据框     
 x <- CHN_adm2@data          #读取行政信息
 xs <- data.frame(x,id=seq(0:344)-1)          #总共345行
@@ -46,8 +46,8 @@ weifang.plot<-ggplot()+
   coord_map("polyconic")
 
 zhejiang.web<-"https://raw.githubusercontent.com/fteng77/dizhen/master/zj.dizhen.fujin.csv"
-zhejiang.dizhen<-read.csv(zhejiang.web,header=T)
-zhejiang.plot+geom_point(data=zhejiang.dizhen,aes(x=jingdu,y=weidu,size=zhenji),fill="red",alpha=0.6,shape=21,colour="red")
+zhejiang.dizhen<-read.csv(zhejiang.web,header=T,stringsAsFactors = F)
+zhejiang.plot+geom_point(data=zhejiang.dizhen,aes(x=jingdu,y=weidu,size=zhenji),fill=I("red"),alpha=I(1/5),shape=21,colour=I("red"))
 
 ningbo.dizhen<-filter(zhejiang.dizhen,shi=="宁波市")
 ningbo.plot+geom_point(data=ningbo.dizhen,aes(x=jingdu,y=weidu,size=zhenji),fill="red",alpha=0.8,shape=21,colour="red")
