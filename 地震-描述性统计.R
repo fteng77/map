@@ -1,0 +1,69 @@
+rm(list=ls())
+gc()
+library("sp")
+library("maptools")
+library(maps)
+library(mapproj)
+library(plyr)
+library(tidyverse)
+
+##1. 数据分析
+#1.0整理数据
+setwd("D:/dizhen")
+dizhen<-read.csv("dizhen.all.new2.csv",header=T,stringsAsFactors = F)
+dizhen<-dizhen[,-1] #删掉第一列
+dizhen<-mutate(dizhen,earthquake.mag=zhenji)  #为了显得高大上，把zhenji改为earthquake.mag
+#dizhen<-filter(dizhen,year>=1970&year<2018)
+
+
+dizhen3<-filter(dizhen,zhenji>=3) #三级以上的地震
+dizhen4<-filter(dizhen,zhenji>=4) #四级以上的地震
+dizhen5<-filter(dizhen,zhenji>=5) #五级以上的地震
+
+dizhen.nosheng<-filter(dizhen,is.na(as.numeric(sheng))==F) #提取没有省名的记录
+max(dizhen.nosheng$zhenji)
+nrow(dizhen.nosheng)
+nrow(dizhen.nosheng)/nrow(dizhen)
+
+#给没有省名的数据画地图
+china_map <- readShapePoly("D:/dizhen/bou2_4p.shp")       # 读取地图空间数据
+china<- fortify(china_map)
+china.plot<-ggplot()+
+  geom_polygon(data=china, aes(x=long, y=lat, group=group),fill="grey95", colour="grey60",size=0.25)+
+  coord_map("polyconic")
+nosheng.plot<-china.plot+
+  geom_point(data=dizhen.nosheng,aes(x=jingdu,y=weidu,size=earthquake.mag),alpha=I(1/5),color="red",fill="red",shape=I(21))
+nosheng.plot
+#结论：由于地图软件的限制，未出现省名的地点都集中于临海海域和边境地区，且只占总数只有千分之一，故这部分数据保留，但在省级分析中不再涉及。
+
+
+#1.1 中国地震总体情况：每年平均发生次数（按年份、震级、按省）
+dizhen.year<-filter(dizhen,is.na(year)==F&year!=2018)
+qplot(as.factor(year),zhenji,data=dizhen.year,geom="boxplot",xlab="年份",ylab="发生次数")
+#qplot(as.factor(year),zhenji,data=dizhen.year,geom="jitter",alpha=I(1/10),color=I("red"),xlab="年份",ylab="发生次数")
+qplot(as.factor(year),data=dizhen.year,geom="bar",xlab="年份",ylab="发生次数")
+dizhen.year.3<-filter(dizhen.year,zhenji>=5)
+qplot(factor(year),data=dizhen.year.3,geom="bar",xlab="年份",ylab="发生次数")
+
+
+
+
+
+
+#1.2 浙江
+
+#1.3 浙江各地市
+
+####1. 中国地图，参考https://zhuanlan.zhihu.com/p/26708368
+china_map <- readShapePoly("D:/dizhen/bou2_4p.shp")       # 读取地图空间数据
+china<- fortify(china_map)
+china.plot<-ggplot()+
+  geom_polygon(data=china, aes(x=long, y=lat, group=group),fill="grey95", colour="grey60",size=0.25)+
+  coord_map("polyconic")
+
+setwd("D:/dizhen")
+dizhen<-read.csv("dizhen.all.new2.csv",header=T,stringsAsFactors = F)
+dizhen<-dizhen[,-1]
+dizhen3<-filter(dizhen,zhenji>=3)
+dizhen4<-filter(dizhen,zhenji>=4)
+dizhen5<-filter(dizhen,zhenji>=5)
