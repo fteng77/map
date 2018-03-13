@@ -7,6 +7,45 @@ library(mapproj)
 library(plyr)
 library(tidyverse)
 
+##0.建立函数multiplot
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+  
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+  
+  numPlots = length(plots)
+  
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                     ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+  
+  if (numPlots==1) {
+    print(plots[[1]])
+    
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+    
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+      
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+
+#as.data.frame(table(dizhen$year))
+
 ##1. 数据分析
 #1.0整理数据
 setwd("D:/dizhen")
@@ -30,9 +69,11 @@ china_map <- readShapePoly("D:/dizhen/bou2_4p.shp")       # 读取地图空间�
 china<- fortify(china_map)
 china.plot<-ggplot()+
   geom_polygon(data=china, aes(x=long, y=lat, group=group),fill="grey95", colour="grey60",size=0.25)+
-  coord_map("polyconic")
+  coord_map("polyconic")+
+  labs(xlab="jingdu",ylab="weidu")
 nosheng.plot<-china.plot+
-  geom_point(data=dizhen.nosheng,aes(x=jingdu,y=weidu,size=earthquake.mag),alpha=I(1/5),color="red",fill="red",shape=I(21))
+  geom_point(data=dizhen.nosheng,aes(x=jingdu,y=weidu,size=earthquake.mag),alpha=I(1/5),color="red",fill="red",shape=I(21))+
+  theme(legend.position = "bottom")
 nosheng.plot
 #结论：由于地图软件的限制，未出现省名的地点都集中于临海海域和边境地区，且只占总数只有千分之一，故这部分数据保留，但在省级分析中不再涉及。
 
