@@ -44,7 +44,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   }
 }
 
-#as.data.frame(table(dizhen$year))
+#as.data.frame(table(dizhen$year))##提取table的数字部分
 
 ##1. 数据分析
 #1.0整理数据
@@ -95,6 +95,7 @@ dizhen.year.6<-filter(dizhen.year,zhenji>=6)
 (x3<-qplot(factor(year),data=dizhen.year.5,geom="bar",xlab="年份",ylab="震级超过5级的发生次数")+theme(axis.text.x = element_text(size=7,angle=45)) )
 (x4<-qplot(factor(year),data=dizhen.year.6,geom="bar",xlab="年份",ylab="震级超过6级的发生次数")+theme(axis.text.x = element_text(size=7,angle=45)) )
 
+multiplot(x1,x2,x3,x4,ncol=1)
 qplot(zhenji,data=dizhen.year.4,geom="histogram",xlab="")+ facet_wrap( ~ factor(year), ncol=10)#分页，参考：http://www.mamicode.com/info-detail-1272791.html
 
 
