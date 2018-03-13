@@ -89,11 +89,11 @@ dizhen.year.3<-filter(dizhen.year,zhenji>=3)
 dizhen.year.4<-filter(dizhen.year,zhenji>=4)
 dizhen.year.5<-filter(dizhen.year,zhenji>=5)
 dizhen.year.6<-filter(dizhen.year,zhenji>=6)
-x0<-qplot(as.factor(year),data=dizhen.year,geom="bar",xlab="",ylab="超过2级次数")+theme(axis.text.x = element_blank(),axis.text.y=element_text(size=7))
-x1<-qplot(factor(year),data=dizhen.year.3,geom="bar",xlab="",ylab="超过3级次数")+theme(axis.text.x = element_blank(),axis.text.y=element_text(size=7))
-x2<-qplot(factor(year),data=dizhen.year.4,geom="bar",xlab="",ylab="超过4级次数")+theme(axis.text.x = element_blank(),axis.text.y=element_text(size=7))
-x3<-qplot(factor(year),data=dizhen.year.5,geom="bar",xlab="年份",ylab="超过5级次数")+theme(axis.text.x = element_text(size=7,angle=45) ,axis.text.y=element_text(size=7))
-x4<-qplot(factor(year),data=dizhen.year.6,geom="bar",xlab="年份",ylab="超过6级次数")+theme(axis.text.x = element_text(size=7,angle=45) ,axis.text.y=element_text(size=7))
+x0<-qplot(as.factor(year),data=dizhen.year,geom="bar",xlab="",ylab="次数(>=2级)")+theme(axis.text.x = element_blank(),axis.text.y=element_text(size=7))
+x1<-qplot(factor(year),data=dizhen.year.3,geom="bar",xlab="",ylab="次数(>=3级)")+theme(axis.text.x = element_blank(),axis.text.y=element_text(size=7))
+x2<-qplot(factor(year),data=dizhen.year.4,geom="bar",xlab="",ylab="次数(>=4级)")+theme(axis.text.x = element_blank(),axis.text.y=element_text(size=7))
+x3<-qplot(factor(year),data=dizhen.year.5,geom="bar",xlab="年份",ylab="次数(>=5级)")+theme(axis.text.x = element_text(size=7,angle=45) ,axis.text.y=element_text(size=7))
+x4<-qplot(factor(year),data=dizhen.year.6,geom="bar",xlab="年份",ylab="次数(>=6级)")+theme(axis.text.x = element_text(size=7,angle=45) ,axis.text.y=element_text(size=7))
 
 multiplot(x0,x1,x2,x3,ncol=1)
 
@@ -102,6 +102,15 @@ multiplot(x0,x1,x2,x3,ncol=1)
 dizhen1<-filter(dizhen,year>=1970&year<2018)
 dizhen1.3<-filter(dizhen1,zhenji>=3)
 qplot(zhenji,data=dizhen1.3,geom="histogram",xlab="",bins=8)+  facet_wrap( ~ factor(year), ncol=10)#分页，参考：http://www.mamicode.com/info-detail-1272791.html
+
+#1.3 画图
+####1. 中国地图，参考https://zhuanlan.zhihu.com/p/26708368
+china_map <- readShapePoly("bou2_4p.shp")       # 读取地图空间数据
+china<- fortify(china_map)
+china.plot<-ggplot()+
+  geom_polygon(data=china, aes(x=long, y=lat, group=group),fill="grey95", colour="grey60",size=0.25)+
+  coord_map("polyconic")
+china.plot+geom_point(data=dizhen,aes(x=jingdu,y=weidu,size=earthquake.mag),fill="gray60",alpha=0.6,shape=21,color="gray60")
 
 
 
