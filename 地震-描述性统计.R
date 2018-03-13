@@ -89,14 +89,19 @@ dizhen.year.3<-filter(dizhen.year,zhenji>=3)
 dizhen.year.4<-filter(dizhen.year,zhenji>=4)
 dizhen.year.5<-filter(dizhen.year,zhenji>=5)
 dizhen.year.6<-filter(dizhen.year,zhenji>=6)
+x0<-qplot(as.factor(year),data=dizhen.year,geom="bar",xlab="",ylab="超过2级次数")+theme(axis.text.x = element_blank(),axis.text.y=element_text(size=7))
+x1<-qplot(factor(year),data=dizhen.year.3,geom="bar",xlab="",ylab="超过3级次数")+theme(axis.text.x = element_blank(),axis.text.y=element_text(size=7))
+x2<-qplot(factor(year),data=dizhen.year.4,geom="bar",xlab="",ylab="超过4级次数")+theme(axis.text.x = element_blank(),axis.text.y=element_text(size=7))
+x3<-qplot(factor(year),data=dizhen.year.5,geom="bar",xlab="年份",ylab="超过5级次数")+theme(axis.text.x = element_text(size=7,angle=45) ,axis.text.y=element_text(size=7))
+x4<-qplot(factor(year),data=dizhen.year.6,geom="bar",xlab="年份",ylab="超过6级次数")+theme(axis.text.x = element_text(size=7,angle=45) ,axis.text.y=element_text(size=7))
 
-(x1<-qplot(factor(year),data=dizhen.year.3,geom="bar",xlab="年份",ylab="震级超过3级的发生次数")+theme(axis.text.x = element_text(size=7,angle=45)) )
-(x2<-qplot(factor(year),data=dizhen.year.4,geom="bar",xlab="年份",ylab="震级超过4级的发生次数")+theme(axis.text.x = element_text(size=7,angle=45)) )
-(x3<-qplot(factor(year),data=dizhen.year.5,geom="bar",xlab="年份",ylab="震级超过5级的发生次数")+theme(axis.text.x = element_text(size=7,angle=45)) )
-(x4<-qplot(factor(year),data=dizhen.year.6,geom="bar",xlab="年份",ylab="震级超过6级的发生次数")+theme(axis.text.x = element_text(size=7,angle=45)) )
+multiplot(x0,x1,x2,x3,ncol=1)
 
-multiplot(x1,x2,x3,x4,ncol=1)
-qplot(zhenji,data=dizhen.year.4,geom="histogram",xlab="")+ facet_wrap( ~ factor(year), ncol=10)#分页，参考：http://www.mamicode.com/info-detail-1272791.html
+
+#1.2  
+dizhen1<-filter(dizhen,year>=1970&year<2018)
+dizhen1.3<-filter(dizhen1,zhenji>=3)
+qplot(zhenji,data=dizhen1.3,geom="histogram",xlab="",bins=8)+  facet_wrap( ~ factor(year), ncol=10)#分页，参考：http://www.mamicode.com/info-detail-1272791.html
 
 
 
