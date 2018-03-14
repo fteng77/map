@@ -121,6 +121,11 @@ sheng.freq<-as.data.frame(table(factor(dizhen.sheng$sheng,levels=lev )))
 colnames(sheng.freq)<-c("sheng","freq")
 qplot(sheng,freq,data=sheng.freq,geom=c("point","area"))+theme(axis.text.x = element_text(size=8,angle=45) ,axis.text.y=element_text(size=10))+labs(xlab="cishu",ylab="sh")
 
+##1.5 地震次数是否存在acf
+acf(as.data.frame(table(factor(dizhen.year.3$year[dizhen.year.3$year>1969&dizhen.year.3$year<2018])))[,2],main="")
+dizhen3<-as.data.frame(table(factor(dizhen.year.3$year[dizhen.year.3$year>1969&dizhen.year.3$year<2018])))
+colnames(dizhen3)<-c("year","freq")
+write.csv(dizhen3,"dizhen.year.csv")
 
 barplot(table(factor(dizhen1.3$sheng,levels=lev)),legend.text = F, xlab="",ylab="")
 

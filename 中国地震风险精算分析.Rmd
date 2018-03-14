@@ -1,0 +1,43 @@
+---
+title: "地震"
+author: "tony"
+date: "2018年3月14日"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#中国地震风险精算分析
+
+我国是一个地震多发国家，特别是随着国民经济规模和城镇化水平的日益提高，地震所造成的损失更加剧烈复杂，值得深入研究。
+
+> 这里加入文献综述部分
+
+本文将基于”中国地震信息网“（ http://www.csi.ac.cn/ ）所提供的原始数据，该数据集收录了自1965年2月至今包括时间、经纬度、震级、震源深度等基本地震信息，自2012年5月起提供了震中参考地名，2016年3月起在震中参考地名的基础上提供监测台信息。本文利用高德地图所提供的API接口采用”逆地理编码“，获取地震震中5公里范围内的景区、住宅、工厂等地理信息，将上述观测值进行整合后进行探索性数据分析，对成灾地震频率进行度量。同时本文利用2010-2017年国家地震局公布的地震灾害损失数据进行损失程度分析。在假设损失频率与损失程度相互独立的条件下，分别对损失频率和损失程度进行分布拟合并进行随机模拟，为中国地震风险提供一个较为精简的精算分析框架。
+
+##一、中国成灾地震发生频率估算
+###1.1 地震风险度量
+
+###1.2 中国地震风险的主要特点
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
