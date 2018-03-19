@@ -1,8 +1,11 @@
 ---
-title: "地震"
+title: "閸︿即娓<bf>"
 author: "tony"
-date: "2018年3月14日"
-output: word_document
+date: "2018楠<9e><b4>3閺<88><88>14閺<83><a5>"
+output:
+  html_document:
+    df_print: paged
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
