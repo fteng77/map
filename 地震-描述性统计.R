@@ -55,6 +55,10 @@ dizhen<-mutate(dizhen,earthquake.mag=zhenji)  #为了显得高大上，把zhenji
 #dizhen<-filter(dizhen,year>=1970&year<2018)
 qplot(factor(year),zhenji,data=dizhen,geom="boxplot",color="black")+theme(axis.text.x = element_text(size=7,angle=45))+theme(legend.position = "none")
 
+
+qplot(factor(year),zhenji,data=dizhen1,geom="boxplot",color="black",xlab="年份",ylab="震级")+theme(axis.text.x = element_text(size=8,angle=45))+theme(legend.position = "none")
+summary(dizhen1)
+  
 # dizhen3<-filter(dizhen,zhenji>=3) #三级以上的地震
 # dizhen4<-filter(dizhen,zhenji>=4) #四级以上的地震
 # dizhen5<-filter(dizhen,zhenji>=5) #五级以上的地震
@@ -129,7 +133,59 @@ write.csv(dizhen3,"dizhen.year.csv")
 
 barplot(table(factor(dizhen1.3$sheng,levels=lev)),legend.text = F, xlab="",ylab="")
 
+#按照省份进行统计
+qplot(factor(sheng),data=dizhen.sheng,geom="bar",xlab="省份",ylab="发生次数")+theme(axis.text.x = element_text(size=7,angle=90))  
+ggplot(data=dizhen.sheng, aes(x=reorder(factor(sheng),rep(-1,length(factor(sheng))),sum)))+geom_bar()+theme(axis.text.x = element_text(size=8,angle=50))  +scale_x_discrete(name='')+ scale_y_discrete(name='次数')
 
+
+# dizhen.sheng.2<-filter(dizhen.sheng,zhenji>=2&year>1969&year<2018)
+# dizhen.sheng.4<-filter(dizhen.sheng.2,zhenji>=4)
+# ggplot(data=dizhen.sheng.2, aes(x=reorder(factor(sheng),rep(-1,length(factor(sheng))),sum)))+geom_bar()+theme(axis.text.x = element_text(size=7,angle=50))  +scale_x_discrete(name='')+ scale_y_discrete(name='次数')
+# dizhen.table.2<-data.frame(sort(table(factor(dizhen.sheng.2$sheng)),decreasing = T))
+# dizhen.table.4<-data.frame(sort(table(factor(dizhen.sheng.4$sheng)),decreasing = T))
+# dizhen.table<-merge(x=dizhen.table.2,y=dizhen.table.4,by="Var1",all.x=T)
+# colnames(dizhen.table)<-c("sheng","2ji","4ji")
+
+dizhenYear<-filter(dizhen,year>=1970&year<2018)
+dizhenYear3<-filter(dizhenYear,zhenji>=3)
+dizhenYear4<-filter(dizhenYear,zhenji>=4)
+dizhenYear5<-filter(dizhenYear,zhenji>=5)
+dizhenYear6<-filter(dizhenYear,zhenji>=6)
+dizhenYear7<-filter(dizhenYear,zhenji>=7)
+
+dizhenYearTable<-data.frame(table(factor(dizhenYear$year)))
+dizhenYearTable3<-data.frame(table(factor(dizhenYear3$year)))
+dizhenYearTable4<-data.frame(table(factor(dizhenYear4$year)))
+dizhenYearTable5<-data.frame(table(factor(dizhenYear5$year)))
+dizhenYearTable6<-data.frame(table(factor(dizhenYear6$year)))
+dizhenYearTable7<-data.frame(table(factor(dizhenYear7$year)))
+
+dizhenYearTableAll<-cbind(dizhenYearTable,dizhenYearTable3,dizhenYearTable4,dizhenYearTable5,dizhenYearTable6)
+dizhenYearTableAll<-dizhenYearTableAll[,c(-3,-5,-7,-9)]
+colnames(dizhenYearTableAll)<-c("year","x2","x3","x4","x5","x6")
+
+write.csv(dizhenYearTableAll,"dizhenyartableall.csv")
+
+
+
+
+# dizhenYearTableAll<-data.frame(dizhenYearTableAll,r23=dizhenYearTableAll$x3/dizhenYearTableAll$x2)
+# dizhenYearTableAll<-data.frame(dizhenYearTableAll,r24=dizhenYearTableAll$x4/dizhenYearTableAll$x2)
+# dizhenYearTableAll<-data.frame(dizhenYearTableAll,r34=dizhenYearTableAll$x4/dizhenYearTableAll$x3)
+# summary(dizhenYearTableAll[,c(5,6,7)])
+# write.csv(dizhenYearTableAll,"dizhenYear.csv")
+# hist(dizhenYearTableAll$r23)
+# hist(dizhenYearTableAll$r34)
+# r23<-dizhenYearTableAll$r23
+# r34<-dizhenYearTableAll$r34
+# acf(dizhenYearTableAll$x3)
+# acf(dizhenYearTableAll$x4)
+
+
+# ks.test(r23,"punif")
+# ks.test(r23,"pnorm")
+# ks.test(r34,"pnorm")
+# ks.test(dizhenYearTableAll$x2,"ppois",lambda=mean(dizhenYearTableAll$x2))
 #1.2 浙江
 
 #1.3 浙江各地市
